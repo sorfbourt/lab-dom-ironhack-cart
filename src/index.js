@@ -42,6 +42,10 @@ function removeProduct(event) {
   const target = event.currentTarget;
   console.log('The target in remove is:', target);
   //... your code goes here
+  const product = target.parentElement.parentElement
+  //console.log(product)
+  product.remove()
+  calculateAll()
 }
 
 // ITERATION 5
@@ -49,8 +53,24 @@ function removeProduct(event) {
 function createProduct() {
   //... your code goes here
   console.log("check")
-  const newProductNameInput = document.querySelectorAll('.create-product td input')[0]
-  const newProductPriceInput = document.querySelectorAll('.create-product td input')[1]
+  const newProductNameInput = document.querySelectorAll('.create-product td input')[0].value
+  console.log(newProductNameInput)
+  const newProductPriceInput = document.querySelectorAll('.create-product td input')[1].value
+  console.log(newProductPriceInput)
+ // const newProducts = document.querySelectorAll('.product:last-child').insertAfter('<div>...code goes in here...</div>');
+  const newProducts = document.querySelector('tbody').innerHTML += `<tr class="product">
+  <td class="name">
+    <span>${newProductNameInput}</span>
+  </td>
+  <td class="price">$<span>${newProductPriceInput}</span></td>
+  <td class="quantity">
+    <input type="number" value="0" min="0" placeholder="Quantity" />
+  </td>
+  <td class="subtotal">$<span>0</span></td>
+  <td class="action">
+    <button class="btn btn-remove">Remove</button>
+  </td>
+</tr>`
 }
 
 window.addEventListener('load', () => {
@@ -58,8 +78,14 @@ window.addEventListener('load', () => {
   calculatePricesBtn.addEventListener('click', calculateAll);
 
   //... your code goes here
+  const removeProductBtn = document.querySelectorAll('.btn-remove')
+  removeProductBtn.forEach(element => {
+    element.addEventListener('click', removeProduct)
+  })
+  
+
+const addProductBtn = document.querySelector('#create')
+addProductBtn.addEventListener('click', createProduct)
 });
 
 
-const addProduct = document.querySelector('#create')
-addProduct.addEventListener('click', createProduct)
